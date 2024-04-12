@@ -1,4 +1,4 @@
-import logger from "@/utils/logger";
+import { info } from "@/utils/logger";
 
 /**
  * @description Checks if an environment variable exists
@@ -9,7 +9,7 @@ function checkVariable(identifier: string) {
   const variable = process.env[identifier];
 
   if (process.env.NODE_ENV !== "production")
-    logger.info(`Checking:\t${identifier} = '${variable}'`);
+    info(`Checking:\t${identifier} = '${variable}'`);
   if (typeof variable === "undefined") {
     throw new Error(`Environment variable "${identifier}" is not defined.`);
   } else return variable;
