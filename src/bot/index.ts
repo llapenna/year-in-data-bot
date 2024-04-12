@@ -3,6 +3,8 @@ import { Telegraf } from "telegraf";
 import { BOT_TOKEN } from "@/utils/config";
 import { info, error } from "@/utils/logger";
 
+import { registerCommands } from "./commands";
+
 /**
  * Executes cleanup tasks and stops the bot when the process receives a signal
  * @param signal NodeJS script termination signal
@@ -19,7 +21,7 @@ const handleStop = async (bot: Telegraf) => {
         bot.stop(signal);
         // TODO: add cleanup function in case of database
 
-        info("Bot stopped successfully!");
+        info("Bot stopped successfully.");
       } catch (e) {
         error("An error ocurred while stopping the app!", e);
       }
@@ -34,15 +36,14 @@ const handleStop = async (bot: Telegraf) => {
 export const start = async () => {
   // Generate instance
   const bot = new Telegraf(BOT_TOKEN);
-  info("Bot created!");
+  info("Bot created.");
 
-  // TODO: add command support
   // Add event handlers and commands
-  // await registerCommands(bot);
-  // info("Bot configured!");
+  await registerCommands(bot);
+  info("Bot configured.");
 
   bot.launch();
-  info("Bot started!");
+  info("Bot started.");
 
   // Add handlers to finish the bot gracefully
   handleStop(bot);

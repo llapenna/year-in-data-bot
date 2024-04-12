@@ -1,4 +1,5 @@
 import { Context, Telegraf } from "telegraf";
+import { info } from "@/utils/logger";
 import { START } from "./start";
 
 const commands = [START];
@@ -27,6 +28,8 @@ export const registerCommands = async (bot: Telegraf) => {
     // Actual command + handler registration
     bot.command(command, handler);
   });
+
+  info(`Registered ${commands.length} commands.`);
 
   // If we don't have a HELP command registered, set the default one
   if (!commands.find(({ command }) => command === "help")) {
