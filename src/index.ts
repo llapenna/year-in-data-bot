@@ -1,3 +1,5 @@
-import { info } from "@/utils/logger";
+import { start } from "./bot";
 
-info("Hello world!");
+(async () => {
+  await start();
+})();
