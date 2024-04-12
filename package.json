@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsup",
     "start": "npm run build && dotenv node dist/index.mjs",
-    "dev": "tsup --watch --onSuccess 'node dist/index.mjs'",
+    "dev": "tsup --watch --onSuccess 'dotenv node dist/index.mjs'",
     "prepare": "husky install",
     "release:major": "dotenv release-it major",
     "release:minor": "dotenv release-it minor",
