@@ -16,6 +16,11 @@ function checkVariable(identifier: string) {
 }
 
 /**
- * @description Node environment. Could be 'production' or 'development'.
+ * Node environment. Could be 'production' or 'development'.
  */
 export const NODE_ENV = checkVariable("NODE_ENV");
+
+/**
+ * Telegram bot token
+ */
+export const BOT_TOKEN = checkVariable("BOT_TOKEN");
