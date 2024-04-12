@@ -24,12 +24,22 @@ export const registerCommands = async (bot: Telegraf) => {
   // HELP command, which is a command itself.
   await bot.telegram.setMyCommands(commands);
 
-  commands.forEach(({ command, handler }) => {
+  commands.forEach(({ command, handler, keyboard }) => {
     // Actual command + handler registration
     bot.command(command, handler);
+
+    // Do the same if we have a keyboard handler
+    if (keyboard) {
+      keyboard.forEach(({ action, handler }) => bot.action(action, handler));
+    }
   });
 
-  info(`Registered ${commands.length} commands.`);
+  info(
+    `Registered ${commands.length} commands and ${commands.reduce(
+      (acc, { keyboard }) => acc + (keyboard?.length ?? 0),
+      0,
+    )} keyboard actions.`,
+  );
 
   // If we don't have a HELP command registered, set the default one
   if (!commands.find(({ command }) => command === "help")) {
