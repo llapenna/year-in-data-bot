@@ -16,6 +16,7 @@
     "prettier": "prettier . --check"
   },
   "dependencies": {
+    "@prisma/client": "^5.12.1",
     "telegraf": "^4.16.3"
   },
   "devDependencies": {
