@@ -1,0 +1,22 @@
+version: '3.9'
+services:
+  bot:
+    build: .
+    container_name: bot
+    restart: always
+    env_file:
+      - .env
+  database:
+    image: postgres
+    restart: always
+    expose:
+      - "5432"
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    volumes:
+      - db:/home/data
+
+volumes:
+  db:
