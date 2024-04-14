@@ -1,5 +1,7 @@
-import { Context, Telegraf } from "telegraf";
+import { Context } from "telegraf";
 import { info } from "@/utils/logger";
+
+import { bot } from "..";
 import { START } from "./start";
 
 const commands = [START];
@@ -18,7 +20,7 @@ const defaultHelp = async (ctx: Context) => {
   return ctx.reply(info);
 };
 
-export const registerCommands = async (bot: Telegraf) => {
+export const registerCommands = async () => {
   // After setting this property, the bot will list all the commands
   // when the user presses the list button. It's not the same as the
   // HELP command, which is a command itself.
@@ -35,7 +37,7 @@ export const registerCommands = async (bot: Telegraf) => {
   });
 
   info(
-    `Registered ${commands.length} commands and ${commands.reduce(
+    `\tRegistered ${commands.length} commands and ${commands.reduce(
       (acc, { keyboard }) => acc + (keyboard?.length ?? 0),
       0,
     )} keyboard actions.`,

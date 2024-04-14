@@ -5,6 +5,11 @@ import { info, error } from "@/utils/logger";
 
 import { registerCommands } from "./commands";
 
+/**
+ * Bot instance. Should not be used directly.
+ */
+export const bot = new Telegraf(BOT_TOKEN);
+
 type OnStopCallback = () => Promise<void>;
 
 /**
@@ -12,7 +17,7 @@ type OnStopCallback = () => Promise<void>;
  * @param signal NodeJS script termination signal
  * @returns Function to be called when the signal is received
  */
-const handleStop = async (bot: Telegraf, onStop?: OnStopCallback) => {
+const handleStop = async (onStop?: OnStopCallback) => {
   // Register signal handler for both SIGINT and SIGTERM
   ["SIGINT", "SIGTERM"].forEach((signal) =>
     process.once(signal, async () => {
@@ -36,17 +41,13 @@ const handleStop = async (bot: Telegraf, onStop?: OnStopCallback) => {
  * @param onStop Callback to be executed when the bot is stopped. Usually used to disconnect from the database
  */
 export const start = async (onStop?: OnStopCallback) => {
-  // Generate instance
-  const bot = new Telegraf(BOT_TOKEN);
-  info("Bot created.");
-
   // Add event handlers and commands
-  await registerCommands(bot);
   info("Bot configured.");
+  await registerCommands();
 
   bot.launch();
   info("Bot started.");
 
   // Add handlers to finish the bot gracefully
-  handleStop(bot, onStop);
+  handleStop(onStop);
 };
