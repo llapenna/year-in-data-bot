@@ -31,5 +31,7 @@ model Data {
   updatedAt DateTime @updatedAt
 
   // Values
+  mood   Float?
+  note   String?
   weight Float?
 }
