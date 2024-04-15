@@ -1,6 +1,6 @@
 import { User } from "@prisma/client";
 import { error, info } from "@/utils/logger";
-import { prisma } from "..";
+import { prisma } from ".";
 
 // TODO: analyze if catching the error is the best approach or we should
 // rethrow the error to the caller
