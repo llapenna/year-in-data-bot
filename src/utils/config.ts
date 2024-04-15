@@ -24,3 +24,8 @@ export const NODE_ENV = checkVariable("NODE_ENV");
  * Telegram bot token
  */
 export const BOT_TOKEN = checkVariable("BOT_TOKEN");
+
+/**
+ * Everyday at 10 PM
+ */
+export const BROADCAST_SCHEDULE = "0 22 * * *";
