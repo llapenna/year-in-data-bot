@@ -4,11 +4,12 @@ import { BOT_TOKEN } from "@/utils/config";
 import { info, error } from "@/utils/logger";
 
 import { registerCommands } from "./commands";
+import { startBroadcastJob } from "./broadcast";
 
 /**
  * Bot instance. Should not be used directly.
  */
-export const bot = new Telegraf(BOT_TOKEN);
+export const bot = new Telegraf<Scenes.WizardContext>(BOT_TOKEN);
 
 type OnStopCallback = () => Promise<void>;
 
@@ -26,7 +27,7 @@ const handleStop = async (onStop?: OnStopCallback) => {
 
         // Stops bot and perform cleanup
         bot.stop(signal);
-        onStop?.();
+        await onStop?.();
 
         info("Bot stopped successfully.");
       } catch (e) {
@@ -43,11 +44,17 @@ const handleStop = async (onStop?: OnStopCallback) => {
 export const start = async (onStop?: OnStopCallback) => {
   // Add event handlers and commands
   info("Bot configured.");
+
   await registerCommands();
+  // Also start the CRON job for broadcasting the message to log values
+  const job = startBroadcastJob();
 
   bot.launch();
   info("Bot started.");
 
   // Add handlers to finish the bot gracefully
-  handleStop(onStop);
+  handleStop(async () => {
+    job.stop();
+    await onStop?.();
+  });
 };
