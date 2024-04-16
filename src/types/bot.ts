@@ -1,6 +1,6 @@
 import { Context, Scenes } from "telegraf";
 
-type Callback = (ctx: Context) => Promise<void>;
+type Callback = (ctx: Context) => ReturnType<Context["sendMessage"]>;
 
 /**
  * Keyboard button type used to register new keyboard buttons INSIDE
