@@ -1,4 +1,4 @@
-import { Context } from "telegraf";
+type Callback = (ctx: Context) => Promise<void>;
 
 /**
  * Keyboard button type used to register new keyboard buttons INSIDE
@@ -6,7 +6,7 @@ import { Context } from "telegraf";
  */
 export interface Keyboardbutton {
   action: string;
-  handler: (ctx: Context) => void;
+  handler: Callback;
 }
 
 /**
@@ -15,6 +15,6 @@ export interface Keyboardbutton {
 export interface Command {
   command: string;
   description: string;
-  handler: (ctx: Context) => void;
+  handler: Callback;
   keyboard?: Keyboardbutton[];
 }
