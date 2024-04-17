@@ -5,6 +5,7 @@ import { info, error } from "@/utils/logger";
 
 import { registerCommands } from "./commands";
 import { startBroadcastJob } from "./broadcast";
+import { registerActions } from "./actions";
 
 /**
  * Bot instance. Should not be used directly.
@@ -46,6 +47,7 @@ export const start = async (onStop?: OnStopCallback) => {
   info("Bot configured.");
 
   await registerCommands();
+  await registerActions();
   // Also start the CRON job for broadcasting the message to log values
   const job = startBroadcastJob();
 

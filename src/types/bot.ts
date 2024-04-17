@@ -1,25 +1,4 @@
-import { Context, Scenes } from "telegraf";
-
-type Callback = (ctx: Context) => ReturnType<Context["sendMessage"]>;
-
-/**
- * Keyboard button type used to register new keyboard buttons INSIDE
- * a command
- */
-export interface Keyboardbutton {
-  action: string;
-  handler: Callback;
-}
-
-/**
- * Command type used to register new commands
- */
-export interface Command {
-  command: string;
-  description: string;
-  handler: Callback;
-  keyboard?: Keyboardbutton[];
-}
+import { Scenes, Middleware } from "telegraf";
 
 interface FormWizardSession extends Scenes.WizardSessionData {
   mood?: number;
@@ -33,3 +12,24 @@ interface FormWizardSession extends Scenes.WizardSessionData {
  * const mood = ctx.scene.session.mood
  */
 export type FormWizardContext = Scenes.WizardContext<FormWizardSession>;
+
+type Callback = Middleware<FormWizardContext>;
+
+/**
+ * Keyboard button type used to register new keyboard buttons INSIDE
+ * a command
+ */
+export interface Action {
+  name: string;
+  handler: Callback;
+}
+
+/**
+ * Command type used to register new commands
+ */
+export interface Command {
+  command: string;
+  description: string;
+  handler: Callback;
+  keyboard?: Action[];
+}

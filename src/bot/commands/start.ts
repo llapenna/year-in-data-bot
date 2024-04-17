@@ -38,7 +38,7 @@ export const START: Command = {
   },
   keyboard: [
     {
-      action: KeyboardActions.NOTIFY,
+      name: KeyboardActions.NOTIFY,
       handler: async (ctx) => {
         if (!ctx.from) {
           return ctx.reply(

@@ -20,6 +20,9 @@ const defaultHelp = async (ctx: Context) => {
   return ctx.reply(info);
 };
 
+/**
+ * Register all the commands and associated actions
+ */
 export const registerCommands = async () => {
   // After setting this property, the bot will list all the commands
   // when the user presses the list button. It's not the same as the
@@ -32,7 +35,7 @@ export const registerCommands = async () => {
 
     // Do the same if we have a keyboard handler
     if (keyboard) {
-      keyboard.forEach(({ action, handler }) => bot.action(action, handler));
+      keyboard.forEach(({ name, handler }) => bot.action(name, handler));
     }
   });
 
@@ -40,7 +43,7 @@ export const registerCommands = async () => {
     `\tRegistered ${commands.length} commands and ${commands.reduce(
       (acc, { keyboard }) => acc + (keyboard?.length ?? 0),
       0,
-    )} keyboard actions.`,
+    )} associated actions.`,
   );
 
   // If we don't have a HELP command registered, set the default one
