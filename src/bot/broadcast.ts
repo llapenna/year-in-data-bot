@@ -1,4 +1,5 @@
 import { Convenience } from "telegraf/types";
+import { Markup } from "telegraf";
 import { CronJob } from "cron";
 
 import { getAllNotifiableUsers } from "@/db/user";
@@ -6,6 +7,7 @@ import { BROADCAST_SCHEDULE } from "@/utils/config";
 import { info } from "@/utils/logger";
 
 import { bot } from ".";
+import { FORM_ENTER_SCENE } from "./actions/form";
 
 /**
  * Sends a message to all the users that have notifications enabled.
@@ -33,13 +35,17 @@ export const startBroadcastJob = () => {
   const job = CronJob.from({
     cronTime: BROADCAST_SCHEDULE,
     onTick: async () => {
-      info("Should broadcast messages.");
-      // TODO: add message with button to initiate the recording
-      // ctx.scene.enter(...)
+      broadcast(
+        "It's time to record your daily data!",
+        Markup.inlineKeyboard([
+          Markup.button.callback("Record!", FORM_ENTER_SCENE),
+        ]),
+      );
     },
     start: true,
     timeZone: "America/Buenos_Aires",
   });
 
+  info("\tBroadcast job started.");
   return job;
 };
