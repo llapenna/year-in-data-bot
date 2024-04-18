@@ -2,8 +2,11 @@ import { Scenes, Middleware } from "telegraf";
 
 interface FormWizardSession extends Scenes.WizardSessionData {
   mood?: number;
-  note?: string;
   weight?: number;
+  coffeeCount?: number;
+  didCry?: boolean;
+  didExercise?: boolean;
+  didMeditate?: boolean;
 }
 /**
  * Context for the form wizard. It stores the "form" data in the session
@@ -13,7 +16,7 @@ interface FormWizardSession extends Scenes.WizardSessionData {
  */
 export type FormWizardContext = Scenes.WizardContext<FormWizardSession>;
 
-type Callback = Middleware<FormWizardContext>;
+export type Callback = Middleware<FormWizardContext>;
 
 /**
  * Keyboard button type used to register new keyboard buttons INSIDE
