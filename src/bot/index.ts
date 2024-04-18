@@ -1,10 +1,11 @@
-import { Telegraf } from "telegraf";
+import { Scenes, Telegraf, session } from "telegraf";
 
 import { BOT_TOKEN } from "@/utils/config";
 import { info, error } from "@/utils/logger";
 
 import { registerCommands } from "./commands";
 import { startBroadcastJob } from "./broadcast";
+import { stage } from "./form";
 import { registerActions } from "./actions";
 
 /**
@@ -44,8 +45,13 @@ const handleStop = async (onStop?: OnStopCallback) => {
  */
 export const start = async (onStop?: OnStopCallback) => {
   // Add event handlers and commands
-  info("Bot configured.");
+  info("Configuring bot...");
 
+  // Attach middlewares
+  bot.use(session());
+  bot.use(stage.middleware());
+
+  // Register commands and actions
   await registerCommands();
   await registerActions();
   // Also start the CRON job for broadcasting the message to log values
