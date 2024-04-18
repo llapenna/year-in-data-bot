@@ -31,7 +31,11 @@ model Data {
   updatedAt DateTime @updatedAt
 
   // Values
-  mood   Float?
-  note   String?
-  weight Float?
+  mood        Float?
+  note        String?
+  weight      Float?
+  coffeeCount Int?
+  didCry      Boolean?
+  didExercise Boolean?
+  didMeditate Boolean?
 }
