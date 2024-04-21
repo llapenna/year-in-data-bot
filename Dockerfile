@@ -1,11 +1,17 @@
+# Setup image
 FROM node:18-alpine
+
 WORKDIR /usr/src/app
 
+# Copy and install dependencies
 COPY package.json package-lock.json ./
 RUN npm ci
 
 COPY . ./
 RUN npm run build
-RUN npx prisma generate
 
-CMD ["npm", "start"]
+# Start application
+ADD start.sh ./start.sh
+RUN chmod +x ./start.sh
+
+CMD ./start.sh
