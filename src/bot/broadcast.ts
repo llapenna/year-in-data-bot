@@ -2,7 +2,7 @@ import { Convenience } from "telegraf/types";
 import { Markup } from "telegraf";
 import { CronJob } from "cron";
 
-import { getAllNotifiableUsers } from "@/db/user";
+import { getAllNotifiableUsers, shouldRecordToday } from "@/db/user";
 import { BROADCAST_SCHEDULE } from "@/utils/config";
 import { info } from "@/utils/logger";
 
@@ -23,7 +23,10 @@ export const broadcast = async (
 
   // Wait for all the messages to be sent
   await Promise.all(
-    telegramIds.map((id) => bot.telegram.sendMessage(id, msg, extras)),
+    telegramIds.map(async (id) => {
+      const shouldBroadcast = await shouldRecordToday(id);
+      if (shouldBroadcast) return bot.telegram.sendMessage(id, msg, extras);
+    }),
   );
 };
 

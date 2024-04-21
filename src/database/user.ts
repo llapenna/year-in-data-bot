@@ -65,3 +65,36 @@ export const toggleNotify = async (
     return false;
   }
 };
+
+/**
+ * Checks if a user should record data today. Compares the last recorded date with today's date.
+ * @param telegramId User's Telegram ID.
+ * @returns `true` if the user should record data today, `false` otherwise.
+ */
+export const shouldRecordToday = async (telegramId: User["telegramId"]) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      telegramId,
+    },
+    include: {
+      data: {
+        orderBy: {
+          createdAt: "desc",
+        },
+        take: 1,
+      },
+    },
+  });
+
+  // The user does not exist yet
+  if (!user) return false;
+  // The user doesn't have any data recorded yet
+  else if (user.data.length === 0) return true;
+
+  const dateToString = (date: Date) => date.toISOString().split("T")[0];
+
+  const today = dateToString(new Date());
+  const lastRecorded = dateToString(new Date(user.data[0]!.createdAt));
+
+  return today !== lastRecorded;
+};
