@@ -41,7 +41,7 @@ const handleStop = async (onStop?: OnStopCallback) => {
 
 /**
  * Initializes the bot and its handlers
- * @param onStop Callback to be executed when the bot is stopped. Usually used to disconnect from the database
+ * @param onStop Callback to be executed when the bot is stopped. Usually used to perform cleanup
  */
 export const start = async (onStop?: OnStopCallback) => {
   // Add event handlers and commands
