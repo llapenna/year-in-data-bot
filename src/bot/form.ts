@@ -10,7 +10,7 @@ import {
   didMeditateHandler,
 } from "./wizard/actions";
 
-const moodValidator = isInRange([0, 10]);
+const moodValidator = isInRange([1, 10]);
 const weightValidator = isInRange([0]);
 const coffeValidator = isInRange([0]);
 
