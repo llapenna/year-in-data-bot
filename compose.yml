@@ -2,7 +2,6 @@ name: "yig"
 services:
   bot:
     build: .
-    container_name: "bot"
     restart: always
     depends_on:
       database:
@@ -10,7 +9,6 @@ services:
     env_file:
       - .env
   database:
-    container_name: "database"
     image: postgres
     restart: always
     expose:
