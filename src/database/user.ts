@@ -1,4 +1,5 @@
 import { User } from "@prisma/client";
+
 import { error, info } from "@/utils/logger";
 import { prisma } from ".";
 
@@ -24,6 +25,25 @@ export const createUser = async (
     error("An error ocurred while creating the user:", e);
     return null;
   }
+};
+
+/**
+ * Checks if a user exists in the database.
+ * @param telegramId Telegram ID of the user to check.
+ * @returns `true` if the user exists, `false` otherwise.
+ */
+export const userExists = async (
+  telegramId?: User["telegramId"],
+): Promise<boolean> => {
+  if (!telegramId) return false;
+
+  const user = await prisma.user.findUnique({
+    where: {
+      telegramId,
+    },
+  });
+
+  return user !== null;
 };
 
 /**
@@ -91,10 +111,10 @@ export const shouldRecordToday = async (telegramId: User["telegramId"]) => {
   // The user doesn't have any data recorded yet
   else if (user.data.length === 0) return true;
 
-  const dateToString = (date: Date) => date.toISOString().split("T")[0];
+  const d2s = (date: Date) => date.toISOString().split("T")[0];
 
-  const today = dateToString(new Date());
-  const lastRecorded = dateToString(new Date(user.data[0]!.createdAt));
+  const today = d2s(new Date());
+  const lastRecorded = d2s(new Date(user.data[0]!.createdAt));
 
   return today !== lastRecorded;
 };

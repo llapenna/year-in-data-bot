@@ -28,7 +28,7 @@ const scene = new Scenes.WizardScene<FormWizardContext>(
   // ----------
   async (ctx) => {
     ctx.reply(
-      "In a scale from 1 to 10, how was your day?\n\n0 being the worst and 10 the best.",
+      "In a scale from 1 to 10, how was your day?\n\n1 being the worst and 10 the best.",
     );
 
     return ctx.wizard.next();
