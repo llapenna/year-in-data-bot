@@ -28,6 +28,21 @@ export const createUser = async (
 };
 
 /**
+ * Retrieves a user from the database by their Telegram ID.
+ * @param id Telegram ID of the user to find.
+ * @returns The user if found, `null` otherwise.
+ */
+export const getUserByTelegramId = (
+  id?: User["telegramId"],
+): Promise<User | null> => {
+  return prisma.user.findUnique({
+    where: {
+      telegramId: id,
+    },
+  });
+};
+
+/**
  * Checks if a user exists in the database.
  * @param telegramId Telegram ID of the user to check.
  * @returns `true` if the user exists, `false` otherwise.
