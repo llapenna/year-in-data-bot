@@ -4,8 +4,9 @@ import { info } from "@/utils/logger";
 import { bot } from "..";
 import { START } from "./start";
 import { RECORD } from "./record";
+import { GRAPHS } from "./graphs";
 
-const commands = [START, RECORD];
+const commands = [START, RECORD, GRAPHS];
 
 /**
  * Default help command. It will list all the commands registered when no
