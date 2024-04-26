@@ -29,3 +29,13 @@ export const BOT_TOKEN = checkVariable("BOT_TOKEN");
  * Everyday at 10 PM
  */
 export const BROADCAST_SCHEDULE = "0 22 * * *";
+
+/**
+ * Where the frontend is hosted
+ */
+export const FRONTEND_URL = checkVariable("FRONTEND_URL");
+
+/**
+ * Secret used to sign JWT tokens
+ */
+export const JWT_SECRET = checkVariable("JWT_SECRET");
